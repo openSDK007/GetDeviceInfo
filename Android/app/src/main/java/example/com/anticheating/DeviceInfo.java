@@ -285,7 +285,7 @@ public class DeviceInfo {
             data.put("batteryState",TCAgent.getBatteryState(context));
             data.put("locale",TCAgent.getSystemLocale());
             data.put("language",TCAgent.getSystemLanguage());
-            data.put("timezoneV",TCAgent.getSystemTimezoneV());
+            data.put("timezoneV",String.valueOf(TCAgent.getSystemTimezoneV()));
             data.put("gpsLocationsLng",getGpsLocationsLng(context));
             data.put("gpsLocationsLat",getGpsLocationsLat(context));
             data.put("activityRecognition",TCAgent.getActivityRecognition(context));
