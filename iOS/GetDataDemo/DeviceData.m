@@ -1,4 +1,4 @@
-//
+
 //  DeviceData.m
 //  UIDemoGetData
 //
@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <sys/sysctl.h>
 #import "TalkingData.h"
-#import <CoreLocation/CoreLocation.h>
+#import <MapKit/MapKit.h>
 
 @interface DeviceData ()<CLLocationManagerDelegate>
 @property (nonatomic,strong) NSDictionary *dict;
@@ -35,11 +35,14 @@
 - (instancetype)init
 {
     self = [super init];
+    
     if ([CLLocationManager locationServicesEnabled]) {
         _locationmanager = [[CLLocationManager alloc]init];
         _locationmanager.delegate = self;
         _locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
+        [self startLocation];
     }
+    
     return self;
 }
 + (NSString *)getDeviceData {
@@ -57,43 +60,45 @@
 }
 
 + (NSString *)getIDFA {
-        static NSString *results = nil;
+    static NSString *results = nil;
     
-        if ([[[UIDevice currentDevice] systemVersion] floatValue] < 6.0f) {
-            return nil;
-        }
-        
-        if (results) {
-            return results;
-        }
-        
-        @try {
-            for (int i=0; i<5; i++) {
-                results = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-                if (results) {
-                    break;
-                }
-                           }
-        } @catch (NSException *exception) {
-        }
-
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] < 6.0f) {
+        return nil;
+    }
     
+    if (results) {
         return results;
     }
-  
+    
+    @try {
+        for (int i=0; i<5; i++) {
+            results = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+            if (results) {
+                break;
+            }
+        }
+    } @catch (NSException *exception) {
+    }
+    
+    
+    return results;
+}
+
 
 
 + (double)getGpsLocationsLat {
-
     return [DeviceData shareInstance].locationsLat;
 }
 
 + (double)getGpsLocationsLng {
     return [DeviceData shareInstance].locationsLng;
 }
+
 + (NSString *)getRunningAppList {
-    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {        
-        return @" ";
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 9.0f) {
+        NSArray *arr = @[@"wechat"];
+        NSString *str = [arr componentsJoinedByString:@","];
+        return str;
     }
     
     @try {
@@ -149,16 +154,49 @@
     return nil;
 }
 
+-(void)startLocation{
+    self.locationmanager = [[CLLocationManager alloc] init];
+    self.locationmanager.delegate = self;
+    self.locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
+    self.locationmanager.distanceFilter = 100.0f;
+    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >8.0){
+        [self.locationmanager requestWhenInUseAuthorization];
+    }
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+        _locationmanager.allowsBackgroundLocationUpdates =YES;
+    }
+    [self.locationmanager startUpdatingLocation];
+    
+}
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    switch (status) {
+            
+        case kCLAuthorizationStatusNotDetermined:
+            if ([self.locationmanager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
+                [self.locationmanager requestWhenInUseAuthorization];
+            }
+            break;
+        default:
+            break;
+    }
+}
 
-
--(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
-{
-    CLLocation *currentLocation = [locations lastObject];
-    self.locationsLat = currentLocation.coordinate.latitude;
-    self.locationsLng = currentLocation.coordinate.longitude;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
+    
+    
+    CLLocation *newLocation = locations[0];
+    
+    CLLocationCoordinate2D oldCoordinate = newLocation.coordinate;
+    self.locationsLat = oldCoordinate.latitude;
+    self.locationsLng = oldCoordinate.longitude;
+    
+    NSLog(@"旧的经度：%f,旧的纬度：%f",oldCoordinate.longitude,oldCoordinate.latitude);
+    
+    [manager stopUpdatingLocation];
     
     
 }
+
 
 + (NSDictionary *)getDictionary {
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc]init];
@@ -192,8 +230,10 @@
     [dataDic setObject:[self getRunningAppList] forKey:@"runningApps"];
     [dataDic setObject:[TalkingData getActivityRecognition] forKey:@"activityRecognition"];
     return  dataDic;
-
+    
 }
+
+
 
 + (NSDictionary *)systemProcesses {
     NSMutableDictionary *systemProcesses = [NSMutableDictionary dictionary];
