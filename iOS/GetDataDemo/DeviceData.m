@@ -39,7 +39,6 @@
     if ([CLLocationManager locationServicesEnabled]) {
         _locationmanager = [[CLLocationManager alloc]init];
         _locationmanager.delegate = self;
-        _locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
         [self startLocation];
     }
     
