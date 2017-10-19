@@ -127,7 +127,7 @@ public class DeviceInfo {
         String defaultMacAddress = "02:00:00:00:00:00";
         try {
             //Android M 上获取 WiFi Mac
-            if(com.talkingdata.sdk.common.Utils.isApiLevelAbove(23)){
+            if(Build.VERSION.SDK_INT >=23){
                 try {
                     List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
                     if(all == null || all.size() <= 0){
