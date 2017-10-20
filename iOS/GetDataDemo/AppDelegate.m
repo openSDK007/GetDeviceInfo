@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DeviceData.h"
+#import "TalkingData.h"
 @interface AppDelegate ()
 
 @end
@@ -16,9 +17,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    NSLog(@"test--%@",[DeviceData getDeviceData]);
-    return YES;
+//    [TalkingData sessionStarted:@"3467478854245466" withChannelId:@"Apple"];
+        return YES;
 }
 
 

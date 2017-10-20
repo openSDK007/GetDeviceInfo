@@ -12,16 +12,19 @@
 #import <sys/sysctl.h>
 #import "TalkingData.h"
 #import <MapKit/MapKit.h>
+#import "ViewController.h"
 
-@interface DeviceData ()<CLLocationManagerDelegate>
+@interface DeviceData ()
 @property (nonatomic,strong) NSDictionary *dict;
-@property (nonatomic,strong) CLLocationManager *locationmanager;
 @property (nonatomic,assign) double locationsLat;
 @property (nonatomic,assign) double locationsLng;
+//@property (nonatomic,strong) ViewController *vc;
 
 @end
 
 @implementation DeviceData
+static dispatch_semaphore_t match_sema;
+
 +(instancetype)shareInstance {
     static dispatch_once_t onceToken;
     static DeviceData *_shareInstance;
@@ -32,30 +35,57 @@
     });
     return _shareInstance;
 }
-- (instancetype)init
-{
-    self = [super init];
-    
-    if ([CLLocationManager locationServicesEnabled]) {
-        _locationmanager = [[CLLocationManager alloc]init];
-        _locationmanager.delegate = self;
-        [self startLocation];
-    }
-    
-    return self;
-}
+
 + (NSString *)getDeviceData {
     @try {
-        NSDictionary *dic = [self getDictionary];
-        if (dic == nil || ![dic isKindOfClass:[NSDictionary class]]) {
-            return nil;
-        }
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
-        return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            NSDictionary *dic = [self getDictionary];
+            if (dic == nil || ![dic isKindOfClass:[NSDictionary class]]) {
+                return nil;
+            }
+            NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil];
+            return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+
     } @catch (NSException *exception) {
     }
     return nil;
     
+}
+
++ (NSDictionary *)getDictionary {
+        NSMutableDictionary *dataDic = [[NSMutableDictionary alloc]init];
+        
+        [dataDic setObject:[TalkingData getDeviceID] forKey:@"tdid"];
+        [dataDic setObject:[self getIDFA] forKey:@"adId"];
+        [dataDic setObject:[NSNumber numberWithLong:[TalkingData getBootTime]] forKey:@"bootTime"];
+        [dataDic setObject:[TalkingData getBrand] forKey:@"brand"];
+        [dataDic setObject:[TalkingData getModel] forKey:@"model"];
+        [dataDic setObject:[TalkingData getOsName] forKey:@"osName"];
+        [dataDic setObject:[TalkingData getOsVersionName] forKey:@"osVersionName"];
+        NSString *pixel = [NSString stringWithFormat:@"%d*%d", [TalkingData getWidthPixels], [TalkingData getHeightPixels]];
+        [dataDic setObject:pixel forKey:@"pixel"];
+        [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBrightness]]forKey:@"brightness"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData getJailBroken]] forKey:@"jailBroken"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportNfcModule]] forKey:@"supportNfc"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportBluetoothModule]] forKey:@"supportBluetooth"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData isInsertEarphone]] forKey:@"insertEarphones"];
+        [dataDic setValue:[NSNumber numberWithLong:[TalkingData getTotalDiskSpace]] forKey:@"totalDiskSpace"];
+        [dataDic setValue:[NSNumber numberWithLong:[TalkingData getFreeDiskSpace]] forKey:@"freeDiskSpace"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData isWiFiDataConnected]] forKey:@"wifiNetworksConnected"];
+        [dataDic setValue:[NSNumber numberWithBool:[TalkingData isMobileDataConnected]] forKey:@"mobileNetworksConnected"];
+        [dataDic setObject:[TalkingData getCurrentNetworkType] forKey:@"networkType"];
+        [dataDic setObject:[TalkingData getCurrentNetworkIP] forKey:@"wifiIP"];
+        [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryLevel]] forKey:@"batteryLevel"];
+        [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryState]] forKey:@"batteryState"];
+        [dataDic setObject:[TalkingData getSystemLocale] forKey:@"locale"];
+        [dataDic setObject:[TalkingData getSystemLanguage] forKey:@"language"];
+        [dataDic setValue:[NSString stringWithFormat:@"%f",[TalkingData getSystemTimezoneV]]forKey:@"timezoneV"];
+//        [dataDic setObject:[NSNumber numberWithDouble:[self getGpsLocationsLat]] forKey:@"gpsLocationsLat"];
+//        [dataDic setObject:[NSNumber numberWithDouble:[self getGpsLocationsLng]] forKey:@"gpsLocationsLng"];
+        [dataDic setObject:[self getRunningAppList] forKey:@"runningApps"];
+        [dataDic setObject:[TalkingData getActivityRecognition] forKey:@"activityRecognition"];
+    
+    
+    return  dataDic;
 }
 
 + (NSString *)getIDFA {
@@ -86,10 +116,18 @@
 
 
 + (double)getGpsLocationsLat {
+    ViewController *vc = [[ViewController alloc]init];
+    [vc returnText:^(double lat, double lng) {
+        [DeviceData shareInstance].locationsLat = lat;
+    }];
     return [DeviceData shareInstance].locationsLat;
 }
 
 + (double)getGpsLocationsLng {
+    ViewController *vc = [[ViewController alloc]init];
+    [vc returnText:^(double lat,double lng) {
+        [DeviceData shareInstance].locationsLat= lat;
+    }];
     return [DeviceData shareInstance].locationsLng;
 }
 
@@ -152,87 +190,6 @@
     }
     return nil;
 }
-
--(void)startLocation{
-    self.locationmanager = [[CLLocationManager alloc] init];
-    self.locationmanager.delegate = self;
-    self.locationmanager.desiredAccuracy = kCLLocationAccuracyBest;
-    self.locationmanager.distanceFilter = 100.0f;
-    if ([[[UIDevice currentDevice] systemVersion] doubleValue] >8.0){
-        [self.locationmanager requestWhenInUseAuthorization];
-    }
-    if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
-        _locationmanager.allowsBackgroundLocationUpdates =YES;
-    }
-    [self.locationmanager startUpdatingLocation];
-    
-}
-- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
-    switch (status) {
-            
-        case kCLAuthorizationStatusNotDetermined:
-            if ([self.locationmanager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
-                [self.locationmanager requestWhenInUseAuthorization];
-            }
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations {
-    
-    
-    CLLocation *newLocation = locations[0];
-    
-    CLLocationCoordinate2D oldCoordinate = newLocation.coordinate;
-    self.locationsLat = oldCoordinate.latitude;
-    self.locationsLng = oldCoordinate.longitude;
-    
-    NSLog(@"旧的经度：%f,旧的纬度：%f",oldCoordinate.longitude,oldCoordinate.latitude);
-    
-    [manager stopUpdatingLocation];
-    
-    
-}
-
-
-+ (NSDictionary *)getDictionary {
-    NSMutableDictionary *dataDic = [[NSMutableDictionary alloc]init];
-    [dataDic setObject:[TalkingData getDeviceID] forKey:@"tdid"];
-    [dataDic setObject:[self getIDFA] forKey:@"adId"];
-    [dataDic setObject:[NSNumber numberWithLong:[TalkingData getBootTime]] forKey:@"bootTime"];
-    [dataDic setObject:[TalkingData getBrand] forKey:@"brand"];
-    [dataDic setObject:[TalkingData getModel] forKey:@"model"];
-    [dataDic setObject:[TalkingData getOsName] forKey:@"osName"];
-    [dataDic setObject:[TalkingData getOsVersionName] forKey:@"osVersionName"];
-    NSString *pixel = [NSString stringWithFormat:@"%d*%d", [TalkingData getWidthPixels], [TalkingData getHeightPixels]];
-    [dataDic setObject:pixel forKey:@"pixel"];
-    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBrightness]]forKey:@"brightness"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData getJailBroken]] forKey:@"jailBroken"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportNfcModule]] forKey:@"supportNfc"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportBluetoothModule]] forKey:@"supportBluetooth"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isInsertEarphone]] forKey:@"insertEarphones"];
-    [dataDic setValue:[NSNumber numberWithLong:[TalkingData getTotalDiskSpace]] forKey:@"totalDiskSpace"];
-    [dataDic setValue:[NSNumber numberWithLong:[TalkingData getFreeDiskSpace]] forKey:@"freeDiskSpace"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isWiFiDataConnected]] forKey:@"wifiNetworksConnected"];
-    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isMobileDataConnected]] forKey:@"mobileNetworksConnected"];
-    [dataDic setObject:[TalkingData getCurrentNetworkType] forKey:@"networkType"];
-    [dataDic setObject:[TalkingData getCurrentNetworkIP] forKey:@"wifiIP"];
-    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryLevel]] forKey:@"batteryLevel"];
-    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryState]] forKey:@"batteryState"];
-    [dataDic setObject:[TalkingData getSystemLocale] forKey:@"locale"];
-    [dataDic setObject:[TalkingData getSystemLanguage] forKey:@"language"];
-    [dataDic setValue:[NSString stringWithFormat:@"%f",[TalkingData getSystemTimezoneV]]forKey:@"timezoneV"];
-    [dataDic setValue:[NSNumber numberWithDouble:[self getGpsLocationsLat]]forKey:@"gpsLocationsLat"];
-    [dataDic setValue:[NSNumber numberWithDouble:[self getGpsLocationsLng]]forKey:@"gpsLocationsLng"];
-    [dataDic setObject:[self getRunningAppList] forKey:@"runningApps"];
-    [dataDic setObject:[TalkingData getActivityRecognition] forKey:@"activityRecognition"];
-    return  dataDic;
-    
-}
-
-
 
 + (NSDictionary *)systemProcesses {
     NSMutableDictionary *systemProcesses = [NSMutableDictionary dictionary];

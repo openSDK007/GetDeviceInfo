@@ -29,7 +29,10 @@
 /**
  * 获取获取所有数据
  */
+
 + (NSString *)getDeviceData;
 
+//获取已经获取到的字段
++ (NSDictionary *)getDictionary;
 @end
 

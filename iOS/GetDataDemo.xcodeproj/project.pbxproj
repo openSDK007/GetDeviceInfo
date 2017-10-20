@@ -13,6 +13,7 @@
 		C5040CC61F7E5E08001FE768 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5040CC51F7E5E08001FE768 /* CoreFoundation.framework */; };
 		C5040CC81F7E5E14001FE768 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5040CC71F7E5E14001FE768 /* CoreMotion.framework */; };
 		C5040CCA1F7E5E1C001FE768 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5040CC91F7E5E1C001FE768 /* SystemConfiguration.framework */; };
+		C516EBB81F7F9FDC003FCD2B /* libTalkingData.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C516EBB71F7F9FDC003FCD2B /* libTalkingData.a */; };
 		C52B4BCC1F7E5DA100674AEB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B4BCB1F7E5DA100674AEB /* main.m */; };
 		C52B4BCF1F7E5DA100674AEB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B4BCE1F7E5DA100674AEB /* AppDelegate.m */; };
 		C52B4BD21F7E5DA100674AEB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52B4BD11F7E5DA100674AEB /* ViewController.m */; };
@@ -28,6 +29,7 @@
 		C5040CC51F7E5E08001FE768 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		C5040CC71F7E5E14001FE768 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		C5040CC91F7E5E1C001FE768 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C516EBB71F7F9FDC003FCD2B /* libTalkingData.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingData.a; sourceTree = "<group>"; };
 		C52B4BC71F7E5DA100674AEB /* GetDataDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GetDataDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52B4BCB1F7E5DA100674AEB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C52B4BCD1F7E5DA100674AEB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,6 +41,7 @@
 		C52B4BDB1F7E5DA100674AEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C52B4BE11F7E5DB100674AEB /* DeviceData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceData.h; sourceTree = "<group>"; };
 		C52B4BE21F7E5DB100674AEB /* DeviceData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceData.m; sourceTree = "<group>"; };
+		C594E0081F7F2EAD008A2BB0 /* TalkingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingData.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +51,7 @@
 			files = (
 				C5040CCA1F7E5E1C001FE768 /* SystemConfiguration.framework in Frameworks */,
 				C5040CC81F7E5E14001FE768 /* CoreMotion.framework in Frameworks */,
+				C516EBB81F7F9FDC003FCD2B /* libTalkingData.a in Frameworks */,
 				C5040CC61F7E5E08001FE768 /* CoreFoundation.framework in Frameworks */,
 				C5040CC41F7E5E00001FE768 /* AdSupport.framework in Frameworks */,
 				C5040CC21F7E5DF8001FE768 /* libc++.tbd in Frameworks */,
@@ -74,6 +78,7 @@
 		C52B4BBE1F7E5DA100674AEB = {
 			isa = PBXGroup;
 			children = (
+				C516EBB71F7F9FDC003FCD2B /* libTalkingData.a */,
 				C52B4BC91F7E5DA100674AEB /* GetDataDemo */,
 				C52B4BC81F7E5DA100674AEB /* Products */,
 				C5040CBE1F7E5DF0001FE768 /* Frameworks */,
@@ -95,6 +100,7 @@
 				C52B4BCE1F7E5DA100674AEB /* AppDelegate.m */,
 				C52B4BE11F7E5DB100674AEB /* DeviceData.h */,
 				C52B4BE21F7E5DB100674AEB /* DeviceData.m */,
+				C594E0081F7F2EAD008A2BB0 /* TalkingData.h */,
 				C52B4BD01F7E5DA100674AEB /* ViewController.h */,
 				C52B4BD11F7E5DA100674AEB /* ViewController.m */,
 				C52B4BD31F7E5DA100674AEB /* Main.storyboard */,
@@ -146,6 +152,11 @@
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = S4EGEC883V;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -304,6 +315,10 @@
 				DEVELOPMENT_TEAM = S4EGEC883V;
 				INFOPLIST_FILE = GetDataDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.data.com.GetDataDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -316,6 +331,10 @@
 				DEVELOPMENT_TEAM = S4EGEC883V;
 				INFOPLIST_FILE = GetDataDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.data.com.GetDataDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
