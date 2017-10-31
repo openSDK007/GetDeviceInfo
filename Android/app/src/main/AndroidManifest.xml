@@ -22,11 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name="com.talkingdata.sdk.TDAntiCheatingService"
-            android:process="com.talkingdata.sdk.TDAntiCheatingService">
+        <receiver android:name="com.talkingdata.sdk.AntiCheatingReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.talkingdata.sdk.TDAntiCheatingService" />
+                <action android:name="com.talkingdata.sdk.anticheating.updata" />
             </intent-filter>
-        </service>
+        </receiver>
     </application>
 </manifest>
