@@ -2,8 +2,8 @@
 //  ViewController.m
 //  GetAllDeviceData
 //
-//  Created by 冯婷婷 on 2017/10/17.
-//  Copyright © 2017年 冯婷婷. All rights reserved.
+//  Created by Caroline on 2017/10/17.
+//  Copyright © 2017年 Caroline. All rights reserved.
 //
 
 #import "ViewController.h"
