@@ -11,7 +11,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <sys/sysctl.h>
 #import <MapKit/MapKit.h>
-#import "TCFintech.h"
+#import "TalkingData.h"
 
 @interface ViewController ()<CLLocationManagerDelegate>
 
@@ -95,36 +95,36 @@
 - (NSDictionary *)getDictionary {
     NSMutableDictionary *dataDic = [[NSMutableDictionary alloc]init];
     
-    [dataDic setObject:[TCAntiFraud getDeviceID] forKey:@"tdid"];
+    [dataDic setObject:[TalkingData getDeviceID] forKey:@"tdid"];
     [dataDic setObject:[self getIDFA] forKey:@"adId"];
-    [dataDic setObject:[NSNumber numberWithLong:[TCAntiFraud getBootTime]] forKey:@"bootTime"];
-    [dataDic setObject:[TCAntiFraud getBrand] forKey:@"brand"];
-    [dataDic setObject:[TCAntiFraud getModel] forKey:@"model"];
-    [dataDic setObject:[TCAntiFraud getOsName] forKey:@"osName"];
-    [dataDic setObject:[TCAntiFraud getOsVersionName] forKey:@"osVersionName"];
-    NSString *pixel = [NSString stringWithFormat:@"%d*%d", [TCAntiFraud getWidthPixels], [TCAntiFraud getHeightPixels]];
+    [dataDic setObject:[NSNumber numberWithLong:[TalkingData getBootTime]] forKey:@"bootTime"];
+    [dataDic setObject:[TalkingData getBrand] forKey:@"brand"];
+    [dataDic setObject:[TalkingData getModel] forKey:@"model"];
+    [dataDic setObject:[TalkingData getOsName] forKey:@"osName"];
+    [dataDic setObject:[TalkingData getOsVersionName] forKey:@"osVersionName"];
+    NSString *pixel = [NSString stringWithFormat:@"%d*%d", [TalkingData getWidthPixels], [TalkingData getHeightPixels]];
     [dataDic setObject:pixel forKey:@"pixel"];
-    [dataDic setObject:[NSNumber numberWithInt:[TCAntiFraud getBrightness]]forKey:@"brightness"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud getJailBroken]] forKey:@"jailBroken"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud isSupportNfcModule]] forKey:@"supportNfc"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud isSupportBluetoothModule]] forKey:@"supportBluetooth"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud isInsertEarphone]] forKey:@"insertEarphones"];
-    [dataDic setValue:[NSNumber numberWithLong:[TCAntiFraud getTotalDiskSpace]] forKey:@"totalDiskSpace"];
-    [dataDic setValue:[NSNumber numberWithLong:[TCAntiFraud getFreeDiskSpace]] forKey:@"freeDiskSpace"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud isWiFiDataConnected]] forKey:@"wifiNetworksConnected"];
-    [dataDic setValue:[NSNumber numberWithBool:[TCAntiFraud isMobileDataConnected]] forKey:@"mobileNetworksConnected"];
-    [dataDic setObject:[TCAntiFraud getCurrentNetworkType] forKey:@"networkType"];
-    [dataDic setObject:[TCAntiFraud getCurrentNetworkIP] forKey:@"wifiIP"];
-    [dataDic setObject:[NSNumber numberWithInt:[TCAntiFraud getBatteryLevel]] forKey:@"batteryLevel"];
-    [dataDic setObject:[NSNumber numberWithInt:[TCAntiFraud getBatteryState]] forKey:@"batteryState"];
-    [dataDic setObject:[TCAntiFraud getSystemLocale] forKey:@"locale"];
-    [dataDic setObject:[TCAntiFraud getSystemLanguage] forKey:@"language"];
-    [dataDic setValue:[NSString stringWithFormat:@"%f",[TCAntiFraud getSystemTimezoneV]]forKey:@"timezoneV"];
+    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBrightness]]forKey:@"brightness"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData getJailBroken]] forKey:@"jailBroken"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportNfcModule]] forKey:@"supportNfc"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isSupportBluetoothModule]] forKey:@"supportBluetooth"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isInsertEarphone]] forKey:@"insertEarphones"];
+    [dataDic setValue:[NSNumber numberWithLong:[TalkingData getTotalDiskSpace]] forKey:@"totalDiskSpace"];
+    [dataDic setValue:[NSNumber numberWithLong:[TalkingData getFreeDiskSpace]] forKey:@"freeDiskSpace"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isWiFiDataConnected]] forKey:@"wifiNetworksConnected"];
+    [dataDic setValue:[NSNumber numberWithBool:[TalkingData isMobileDataConnected]] forKey:@"mobileNetworksConnected"];
+    [dataDic setObject:[TalkingData getCurrentNetworkType] forKey:@"networkType"];
+    [dataDic setObject:[TalkingData getCurrentNetworkIP] forKey:@"wifiIP"];
+    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryLevel]] forKey:@"batteryLevel"];
+    [dataDic setObject:[NSNumber numberWithInt:[TalkingData getBatteryState]] forKey:@"batteryState"];
+    [dataDic setObject:[TalkingData getSystemLocale] forKey:@"locale"];
+    [dataDic setObject:[TalkingData getSystemLanguage] forKey:@"language"];
+    [dataDic setValue:[NSString stringWithFormat:@"%f",[TalkingData getSystemTimezoneV]]forKey:@"timezoneV"];
     [dataDic setValue:[NSNumber numberWithDouble:[self getGpsLocationsLat]]forKey:@"gpsLocationsLat"];
     [dataDic setValue:[NSNumber numberWithDouble:[self getGpsLocationsLng]]forKey:@"gpsLocationsLng"];
     [dataDic setObject:[self getRunningAppList] forKey:@"runningApps"];
-    if ([TCAntiFraud getActivityRecognition]!= nil) {
-        [dataDic setObject:[TCAntiFraud getActivityRecognition] forKey:@"activityRecognition"];
+    if ([TalkingData getActivityRecognition]!= nil) {
+        [dataDic setObject:[TalkingData getActivityRecognition] forKey:@"activityRecognition"];
     }
     
     return  dataDic;

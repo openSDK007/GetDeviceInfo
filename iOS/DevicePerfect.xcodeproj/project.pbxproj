@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C57951D11FEB63A400237A21 /* libAntiFraud.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C57951D01FEB63A400237A21 /* libAntiFraud.a */; };
+		C5217B751FEBC4C4000547AA /* libTalkingData.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5217B741FEBC4C4000547AA /* libTalkingData.a */; };
 		C5D1E9011F9A03A600D9E7D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9001F9A03A600D9E7D3 /* main.m */; };
 		C5D1E9041F9A03A600D9E7D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9031F9A03A600D9E7D3 /* AppDelegate.m */; };
 		C5D1E9071F9A03A600D9E7D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9061F9A03A600D9E7D3 /* ViewController.m */; };
@@ -26,8 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C57951D01FEB63A400237A21 /* libAntiFraud.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAntiFraud.a; sourceTree = "<group>"; };
-		C57951D21FEB674500237A21 /* TCFintech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCFintech.h; sourceTree = "<group>"; };
+		C5217B741FEBC4C4000547AA /* libTalkingData.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingData.a; sourceTree = "<group>"; };
+		C5217B761FEBC4D1000547AA /* TalkingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingData.h; sourceTree = "<group>"; };
 		C5D1E8FC1F9A03A600D9E7D3 /* DevicePerfect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevicePerfect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5D1E9001F9A03A600D9E7D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C5D1E9021F9A03A600D9E7D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -58,10 +58,10 @@
 				C5D1E9221F9A0C2B00D9E7D3 /* CoreFoundation.framework in Frameworks */,
 				C5D1E92A1F9A0C4800D9E7D3 /* Foundation.framework in Frameworks */,
 				C5D1E9281F9A0C4100D9E7D3 /* libz.tbd in Frameworks */,
-				C57951D11FEB63A400237A21 /* libAntiFraud.a in Frameworks */,
 				C5D1E9261F9A0C3A00D9E7D3 /* libc++.tbd in Frameworks */,
 				C5D1E9241F9A0C3200D9E7D3 /* CoreMotion.framework in Frameworks */,
 				C5D1E9201F9A0C2500D9E7D3 /* SystemConfiguration.framework in Frameworks */,
+				C5217B751FEBC4C4000547AA /* libTalkingData.a in Frameworks */,
 				C5D1E91E1F9A0C1E00D9E7D3 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -72,7 +72,6 @@
 		C5D1E8F31F9A03A600D9E7D3 = {
 			isa = PBXGroup;
 			children = (
-				C57951D01FEB63A400237A21 /* libAntiFraud.a */,
 				C5D1E8FE1F9A03A600D9E7D3 /* DevicePerfect */,
 				C5D1E8FD1F9A03A600D9E7D3 /* Products */,
 				C5D1E91C1F9A0C1E00D9E7D3 /* Frameworks */,
@@ -94,7 +93,8 @@
 				C5D1E9031F9A03A600D9E7D3 /* AppDelegate.m */,
 				C5D1E9051F9A03A600D9E7D3 /* ViewController.h */,
 				C5D1E9061F9A03A600D9E7D3 /* ViewController.m */,
-				C57951D21FEB674500237A21 /* TCFintech.h */,
+				C5217B741FEBC4C4000547AA /* libTalkingData.a */,
+				C5217B761FEBC4D1000547AA /* TalkingData.h */,
 				C5D1E9081F9A03A600D9E7D3 /* Main.storyboard */,
 				C5D1E90E1F9A03A600D9E7D3 /* Assets.xcassets */,
 				C5D1E9101F9A03A600D9E7D3 /* LaunchScreen.storyboard */,
