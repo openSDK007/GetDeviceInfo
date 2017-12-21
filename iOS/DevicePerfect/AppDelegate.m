@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "TCFintech.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [TCAntiFraud sessionStarted:@"1233455665677442433" withChannelId:@"Appstore"];
+    
     return YES;
 }
 
