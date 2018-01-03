@@ -2,6 +2,7 @@ package example.com.anticheating;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
@@ -301,6 +302,29 @@ public class DeviceInfo {
         }
         return runningApps;
     }
+    
+    /**
+     *获取设备安装列表信息
+     *
+     * @param context
+     *
+     * @return Returns 安装列表包名列表
+     */
+    public static List<String> getAllInstalledApps(Context context) {
+        List<String> installedApps = new ArrayList<>();
+        try {
+            PackageManager pm = context.getPackageManager();
+            List<PackageInfo> apps = pm.getInstalledPackages(0);
+            if (apps != null) {
+                for (PackageInfo app : apps) {
+                    installedApps.add(app.packageName);
+                }
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+        return installedApps;
+    }
     /**
      *获取设备全部信息
      *
@@ -411,7 +435,8 @@ public class DeviceInfo {
           }
         ]
       },
-      "runningApps": "[com.example.a, com.example.b, com.example.c, com.example.d]"
+      "runningApps": "[com.example.a, com.example.b, com.example.c, com.example.d]",
+      "installedApps": "[com.example.a, com.example.b, com.example.c, com.example.d]"
     }
      */
     public static JSONObject getDeviceData(Context context) {
@@ -482,6 +507,7 @@ public class DeviceInfo {
             data.put("gpsLocationsLat",getGpsLocationsLat(context));
             data.put("activityRecognition",TCAgent.getActivityRecognition(context));
             data.put("runningApps",getRunningAppList(context).toString());
+            data.put("installedApps",getAllInstalledApps(context).toString());
 
         } catch (Throwable t) {
             t.printStackTrace();
