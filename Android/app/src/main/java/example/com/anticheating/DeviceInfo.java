@@ -14,7 +14,7 @@ import android.telephony.SubscriptionInfo;
 import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 
-import com.tendcloud.tenddata.TCAgent;
+import com.tcfintech.sdk.TCAntiFraudAgent;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -442,41 +442,41 @@ public class DeviceInfo {
     public static JSONObject getDeviceData(Context context) {
         JSONObject data = new JSONObject();
         try {
-            data.put("tdid", TCAgent.getDeviceId(context));
+            data.put("tdid", TCAntiFraudAgent.getDeviceId(context));
             data.put("imeis",new JSONArray(getImeis(context)));
             data.put("androidId",getAndroidID(context));
             data.put("wifiMac",getWiFiMac(context));
-            data.put("basebandVersion", TCAgent.getBasebandVersion());
-            data.put("bootTime", TCAgent.getBootTime());
-            data.put("brand",TCAgent.getBrand());
-            data.put("model",TCAgent.getModel());
-            data.put("osName",TCAgent.getOsName());
-            data.put("osVersionName",TCAgent.getOsVersionName());
-            data.put("brightness",TCAgent.getBrightness(context));
-            data.put("pixel",new StringBuilder().append(TCAgent.getHeightPixels(context)).append("*")
-                    .append(TCAgent.getWidthPixels(context)).append("*").append(TCAgent.getDensityDpi(context))
+            data.put("basebandVersion", TCAntiFraudAgent.getBasebandVersion());
+            data.put("bootTime", TCAntiFraudAgent.getBootTime());
+            data.put("brand",TCAntiFraudAgent.getBrand());
+            data.put("model",TCAntiFraudAgent.getModel());
+            data.put("osName",TCAntiFraudAgent.getOsName());
+            data.put("osVersionName",TCAntiFraudAgent.getOsVersionName());
+            data.put("brightness",TCAntiFraudAgent.getBrightness(context));
+            data.put("pixel",new StringBuilder().append(TCAntiFraudAgent.getHeightPixels(context)).append("*")
+                    .append(TCAntiFraudAgent.getWidthPixels(context)).append("*").append(TCAntiFraudAgent.getDensityDpi(context))
                     .toString());
-            data.put("supportMobile",TCAgent.isSupportMobileModule(context));
-            data.put("supportWiFi",TCAgent.isSupportWiFiModule(context));
-            data.put("supportGps",TCAgent.isSupportGpsModule(context));
-            data.put("supportTelephone",TCAgent.isSupportTelephoneModule(context));
-            data.put("supportNfc",TCAgent.isSupportNfcModule(context));
-            data.put("supportBluetooth",TCAgent.isSupportBluetoothModule(context));
-            data.put("supportOtg",TCAgent.isSupportOtgModule(context));
-            data.put("insertEarphones",TCAgent.isInsertEarphone(context));
-            data.put("cpuName",TCAgent.getCpuName());
-            data.put("cpuCoreNum",TCAgent.getCpuCoreNum());
-            data.put("cpuMaxFreq",TCAgent.getCpuMaxFreq());
-            data.put("cpuMinFreq", TCAgent.getCpuMinFreq());
-            data.put("cpuCurFreq",TCAgent.getCpuCurrentFreq());
-            data.put("totalDiskSpace",TCAgent.getTotalDiskSpace());
-            data.put("freeDiskSpace",TCAgent.getFreeDiskSpace());
-            data.put("totalRamSpace",TCAgent.getTotalRamSpace());
-            data.put("freeRamSpace",TCAgent.getFreeRamSpace());
-            data.put("totalSDCardSpace", TCAgent.getTotalSDCardSpace());
-            data.put("freeSDCardSpace",TCAgent.getFreeSDCardSpace());
+            data.put("supportMobile",TCAntiFraudAgent.isSupportMobileModule(context));
+            data.put("supportWiFi",TCAntiFraudAgent.isSupportWiFiModule(context));
+            data.put("supportGps",TCAntiFraudAgent.isSupportGpsModule(context));
+            data.put("supportTelephone",TCAntiFraudAgent.isSupportTelephoneModule(context));
+            data.put("supportNfc",TCAntiFraudAgent.isSupportNfcModule(context));
+            data.put("supportBluetooth",TCAntiFraudAgent.isSupportBluetoothModule(context));
+            data.put("supportOtg",TCAntiFraudAgent.isSupportOtgModule(context));
+            data.put("insertEarphones",TCAntiFraudAgent.isInsertEarphone(context));
+            data.put("cpuName",TCAntiFraudAgent.getCpuName());
+            data.put("cpuCoreNum",TCAntiFraudAgent.getCpuCoreNum());
+            data.put("cpuMaxFreq",TCAntiFraudAgent.getCpuMaxFreq());
+            data.put("cpuMinFreq", TCAntiFraudAgent.getCpuMinFreq());
+            data.put("cpuCurFreq",TCAntiFraudAgent.getCpuCurrentFreq());
+            data.put("totalDiskSpace",TCAntiFraudAgent.getTotalDiskSpace());
+            data.put("freeDiskSpace",TCAntiFraudAgent.getFreeDiskSpace());
+            data.put("totalRamSpace",TCAntiFraudAgent.getTotalRamSpace());
+            data.put("freeRamSpace",TCAntiFraudAgent.getFreeRamSpace());
+            data.put("totalSDCardSpace", TCAntiFraudAgent.getTotalSDCardSpace());
+            data.put("freeSDCardSpace",TCAntiFraudAgent.getFreeSDCardSpace());
             List<String> imsis = getSimSubscriberId(context);
-            List<String> simOperatorName = TCAgent.getSimOperatorName(context);
+            List<String> simOperatorName = TCAntiFraudAgent.getSimOperatorName(context);
             JSONArray sim = new JSONArray();
             try {
                 for(int i = 0;i< imsis.size();i++) {
@@ -489,23 +489,23 @@ public class DeviceInfo {
                 t.printStackTrace();
             }
             data.put("sim",sim);
-            data.put("simType",TCAgent.getSimType(context));
-            data.put("basestationID",TCAgent.getBasestationId(context));
-            data.put("basestationSignalLevel",TCAgent.getBasestationSignalLevel(context));
-            data.put("cdmaBasestationLocationLng",TCAgent.getCdmaBasestationLocationLng(context));
-            data.put("cdmaBasestationLocationLat",TCAgent.getCdmaBasestationLocationLat(context));
-            data.put("wifiNetworksConnected",TCAgent.isWiFiDataConnected(context));
-            data.put("mobileNetworksConnected",TCAgent.isMobileDataConnected(context));
-            data.put("networkType", TCAgent.getCurrentNetworkType(context));
-            data.put("wifiIP",TCAgent.getCurrentNetworkIP(context));
-            data.put("batteryLevel",TCAgent.getBatteryLevel(context));
-            data.put("batteryState",TCAgent.getBatteryState(context));
-            data.put("locale",TCAgent.getSystemLocale());
-            data.put("language",TCAgent.getSystemLanguage());
-            data.put("timezoneV",String.valueOf(TCAgent.getSystemTimezoneV()));
+            data.put("simType",TCAntiFraudAgent.getSimType(context));
+            data.put("basestationID",TCAntiFraudAgent.getBasestationId(context));
+            data.put("basestationSignalLevel",TCAntiFraudAgent.getBasestationSignalLevel(context));
+            data.put("cdmaBasestationLocationLng",TCAntiFraudAgent.getCdmaBasestationLocationLng(context));
+            data.put("cdmaBasestationLocationLat",TCAntiFraudAgent.getCdmaBasestationLocationLat(context));
+            data.put("wifiNetworksConnected",TCAntiFraudAgent.isWiFiDataConnected(context));
+            data.put("mobileNetworksConnected",TCAntiFraudAgent.isMobileDataConnected(context));
+            data.put("networkType", TCAntiFraudAgent.getCurrentNetworkType(context));
+            data.put("wifiIP",TCAntiFraudAgent.getCurrentNetworkIP(context));
+            data.put("batteryLevel",TCAntiFraudAgent.getBatteryLevel(context));
+            data.put("batteryState",TCAntiFraudAgent.getBatteryState(context));
+            data.put("locale",TCAntiFraudAgent.getSystemLocale());
+            data.put("language",TCAntiFraudAgent.getSystemLanguage());
+            data.put("timezoneV",String.valueOf(TCAntiFraudAgent.getSystemTimezoneV()));
             data.put("gpsLocationsLng",getGpsLocationsLng(context));
             data.put("gpsLocationsLat",getGpsLocationsLat(context));
-            data.put("activityRecognition",TCAgent.getActivityRecognition(context));
+            data.put("activityRecognition",TCAntiFraudAgent.getActivityRecognition(context));
             data.put("runningApps",getRunningAppList(context).toString());
             data.put("installedApps",getAllInstalledApps(context).toString());
 
