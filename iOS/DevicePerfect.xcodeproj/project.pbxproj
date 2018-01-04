@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C5217B751FEBC4C4000547AA /* libTalkingData.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5217B741FEBC4C4000547AA /* libTalkingData.a */; };
 		C5D1E9011F9A03A600D9E7D3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9001F9A03A600D9E7D3 /* main.m */; };
 		C5D1E9041F9A03A600D9E7D3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9031F9A03A600D9E7D3 /* AppDelegate.m */; };
 		C5D1E9071F9A03A600D9E7D3 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D1E9061F9A03A600D9E7D3 /* ViewController.m */; };
@@ -26,8 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		C5217B741FEBC4C4000547AA /* libTalkingData.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingData.a; sourceTree = "<group>"; };
-		C5217B761FEBC4D1000547AA /* TalkingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TalkingData.h; sourceTree = "<group>"; };
+		C58EB31F1FFE325900F90DF3 /* TCAntiFraudAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCAntiFraudAgent.h; sourceTree = "<group>"; };
 		C5D1E8FC1F9A03A600D9E7D3 /* DevicePerfect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DevicePerfect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5D1E9001F9A03A600D9E7D3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C5D1E9021F9A03A600D9E7D3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -61,7 +59,6 @@
 				C5D1E9261F9A0C3A00D9E7D3 /* libc++.tbd in Frameworks */,
 				C5D1E9241F9A0C3200D9E7D3 /* CoreMotion.framework in Frameworks */,
 				C5D1E9201F9A0C2500D9E7D3 /* SystemConfiguration.framework in Frameworks */,
-				C5217B751FEBC4C4000547AA /* libTalkingData.a in Frameworks */,
 				C5D1E91E1F9A0C1E00D9E7D3 /* AdSupport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,8 +90,7 @@
 				C5D1E9031F9A03A600D9E7D3 /* AppDelegate.m */,
 				C5D1E9051F9A03A600D9E7D3 /* ViewController.h */,
 				C5D1E9061F9A03A600D9E7D3 /* ViewController.m */,
-				C5217B741FEBC4C4000547AA /* libTalkingData.a */,
-				C5217B761FEBC4D1000547AA /* TalkingData.h */,
+				C58EB31F1FFE325900F90DF3 /* TCAntiFraudAgent.h */,
 				C5D1E9081F9A03A600D9E7D3 /* Main.storyboard */,
 				C5D1E90E1F9A03A600D9E7D3 /* Assets.xcassets */,
 				C5D1E9101F9A03A600D9E7D3 /* LaunchScreen.storyboard */,
@@ -331,6 +327,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = W7YDEDGW4E;
 				INFOPLIST_FILE = DevicePerfect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -348,6 +345,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = W7YDEDGW4E;
 				INFOPLIST_FILE = DevicePerfect/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

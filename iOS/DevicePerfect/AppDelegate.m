@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "TalkingData.h"
+#import <AddressBook/AddressBook.h>
+#import "TCAntiFraudAgent.h"
 
 @interface AppDelegate ()
 
@@ -18,8 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [TalkingData sessionStarted:@"1233455665677442433" withChannelId:@"Appstore"];
+    [TCAntiFraudAgent startAgent:@"sdk-20171227-1" channelId:@"AppStore"];
     
+//    ABAddressBookRef addBook =ABAddressBookCreateWithOptions(NULL, NULL);
+//    ABAddressBookRequestAccessWithCompletion(addBook, ^(bool granted, CFErrorRef error) {
+//        
+//    });
+//    CFRelease(addBook);
     return YES;
 }
 
